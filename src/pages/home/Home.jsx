@@ -1,8 +1,8 @@
 import React from "react";
 
-import Header from "../../header/Header.jsx";
-import Posts from "../../posts/Posts.jsx";
-import Sidebar from "../../sidebar/SideBar.jsx";
+import Header from "../../components/header/Header.jsx";
+import Posts from "../../components/posts/Posts.jsx";
+import Sidebar from "../../components/sidebar/SideBar.jsx";
 
 import "./home.css";
 
