@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const authRoute = require("./routes/auth.js");
 const userRoute = require("./routes/users.js");
 const postRoute = require("./routes/posts.js");
+const categoryRoute = require("./routes/categories.js");
 
 dotenv.config();
 const PORT = 5000;
@@ -28,7 +29,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
-app.use("/api/post", postRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/categories", categoryRoute);
 
 app.listen(PORT, (err) => {
   if (err) {
