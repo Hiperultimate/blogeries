@@ -1,40 +1,33 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./post.css";
 
-function Post() {
+function Post({ post }) {
+  const { desc, title, createdAt, photo, categories, _id } = post;
+  console.log(post);
   return (
     <div className="post">
-      <img
-        className="postImg"
-        src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-        alt=""
-      />
+      {post.photo && (
+        <img
+          className="postImg"
+          src={photo}
+          // src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+          alt=""
+        />
+      )}
       <div className="postInfo">
         <div className="postCats">
-          <span className="postCat">Music</span>
-          <span className="postCat">Life</span>
+          {categories.map((c) => {
+            return <span className="postCat">{c.name}</span>;
+          })}
         </div>
-        <span className="postTitle">Lorem ipsum dolor sit amet</span>
+        <Link to={`/post/${_id}`} className="link">
+          <span className="postTitle">{title}</span>
+        </Link>
         <hr />
-        <span className="postDate">1 hour ago</span>
+        <span className="postDate">{new Date(createdAt).toDateString()}</span>
       </div>
-      <p className="postDesc">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores illo
-        dolore adipisci, iusto veritatis repellendus cum assumenda amet omnis
-        placeat natus dignissimos eos, culpa at vero non ut error quae?
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores illo
-        dolore adipisci, iusto veritatis repellendus cum assumenda amet omnis
-        placeat natus dignissimos eos, culpa at vero non ut error quae?
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores illo
-        dolore adipisci, iusto veritatis repellendus cum assumenda amet omnis
-        placeat natus dignissimos eos, culpa at vero non ut error quae?
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores illo
-        dolore adipisci, iusto veritatis repellendus cum assumenda amet omnis
-        placeat natus dignissimos eos, culpa at vero non ut error quae?
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolores illo
-        dolore adipisci, iusto veritatis repellendus cum assumenda amet omnis
-        placeat natus dignissimos eos, culpa at vero non ut error quae?
-      </p>
+      <p className="postDesc">{desc}</p>
     </div>
   );
 }

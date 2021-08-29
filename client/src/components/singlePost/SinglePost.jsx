@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import axios from "axios";
 import "./singlePost.css";
 
 function SinglePost() {
+  const location = useLocation();
+  const path = location.pathname.split("/")[2];
+  const [post, setPost] = useState({});
+
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axios.get(`/posts/${path}`);
+      setPost(res.data);
+      console.log(res.data);
+    };
+    getPost();
+  }, [path]); // This line means whenever the path changes, fire the useEffect function
+
   return (
     <div className="singlePost">
       <div className="singePostWrapper">
-        <img
-          className="singlePostImg"
-          src="https://images.pexels.com/photos/6685428/pexels-photo-6685428.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-          alt=""
-        />
+        {post.photo && (
+          <img className="singlePostImg" src={post.photo} alt="" />
+        )}
         <h1 className="singlePostTitle">
-          Lorem ipsum dolor sit amet, consectetur
+          {post.title}
           <div className="singlePostEdit">
             <i className="singlePostIcon far fa-edit"></i>
             <i className="singlePostIcon far fa-trash-alt"></i>
@@ -19,24 +32,13 @@ function SinglePost() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Saiki</b>
+            Author: <b>{post.username}</b>
           </span>
-          <span className="singlePostDate">1 hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDesc">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit
-          deleniti ratione provident impedit? Quo animi incidunt, enim culpa eos
-          ipsum, deserunt aspernatur corrupti optio, eligendi deleniti
-          cupiditate quos iusto magni.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit
-          deleniti ratione provident impedit? Quo animi incidunt, enim culpa eos
-          ipsum, deserunt aspernatur corrupti optio, eligendi deleniti
-          cupiditate quos iusto magni.
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit
-          deleniti ratione provident impedit? Quo animi incidunt, enim culpa eos
-          ipsum, deserunt aspernatur corrupti optio, eligendi deleniti
-          cupiditate quos iusto magni.
-        </p>
+        <p className="singlePostDesc">{post.desc}</p>
       </div>
     </div>
   );

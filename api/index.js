@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const app = express();
 const mongoose = require("mongoose");
+const multer = require("multer"); // A package for storing various kinds of files on your server (if you are not using services like AWS or firebase)
 
 const authRoute = require("./routes/auth.js");
 const userRoute = require("./routes/users.js");
@@ -22,6 +23,20 @@ mongoose
   })
   .then(console.log("Connected to database"))
   .catch((err) => console.log(err));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, req.body.name);
+  },
+});
+
+const upload = multer({ storage: storage });
+app.post("/api/upload", upload.single("file"), (req, res) => {
+  res.status(200).json("File has been uploaded");
+});
 
 app.get("/", (req, res) => {
   res.send("Homepage");
