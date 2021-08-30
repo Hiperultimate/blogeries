@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import "./singlePost.css";
 
@@ -12,7 +13,6 @@ function SinglePost() {
     const getPost = async () => {
       const res = await axios.get(`/posts/${path}`);
       setPost(res.data);
-      console.log(res.data);
     };
     getPost();
   }, [path]); // This line means whenever the path changes, fire the useEffect function
@@ -32,7 +32,10 @@ function SinglePost() {
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>{post.username}</b>
+            Author: 
+            <Link to={`/?user=${post.username}`} className="link">
+              <b>{post.username}</b>
+            </Link>
           </span>
           <span className="singlePostDate">
             {new Date(post.createdAt).toDateString()}

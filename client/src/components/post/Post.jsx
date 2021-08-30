@@ -4,7 +4,6 @@ import "./post.css";
 
 function Post({ post }) {
   const { desc, title, createdAt, photo, categories, _id } = post;
-  console.log(post);
   return (
     <div className="post">
       {post.photo && (
