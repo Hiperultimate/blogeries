@@ -23,6 +23,7 @@ function Register() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(false);
     try {
       const res = await axios.post("/auth/register", {
         username,
@@ -71,6 +72,7 @@ function Register() {
           Login
         </Link>
       </button>
+      {error && <span style={{color: 'red', marginTop: "10px"}}>Something went wrong!</span>}
     </div>
   );
 }
