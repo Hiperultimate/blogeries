@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const app = express();
 const mongoose = require("mongoose");
 const multer = require("multer"); // A package for storing various kinds of files on your server (if you are not using services like AWS or firebase)
+const path = require("path");
 
 const authRoute = require("./routes/auth.js");
 const userRoute = require("./routes/users.js");
@@ -14,6 +15,7 @@ const PORT = 5000;
 
 //Middleware
 app.use(express.json());
+app.use("/images", express.static(path.join(__dirname,"/images")));
 
 mongoose
   .connect(process.env.MONGO_URL, {
